@@ -1,3 +1,0 @@
-1. install redux, redux-thunk, react-redux
-2. npm install for both server side and client side applications
-3. 

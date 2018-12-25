@@ -27,11 +27,18 @@ module.exports = function(app){
                .then(users => res.json(users));
     });
 
-    app.post('/login',
-        passport.authenticate(
+    app.post('/login', (req, res, next) => {
+        try {
+        return passport.authenticate(
             'jimmy',
             {successRedirect: '/',
-            failureRedirect: '/login?failed=true'}))
+            failureRedirect: '/login'})(req, res, next)
+        } catch(e) {
+            res.send(e.message);
+        }
+    }
+        
+    )
 
     app.get('/api/profile', (req, res) => {
         var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)

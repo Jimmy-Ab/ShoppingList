@@ -33,15 +33,12 @@ passport.serializeUser(function(user, done) {
                                     lastName: user.lastName,
                                     email: user.email
                                 }
-                                let token = jwt.sign(payload, process.env.SECRET_KEY, {
-                                    expiresIn: 1440
-                                })
                                 console.log("bcrypt found match", token)
                                 user.token = token
                                 done(null, user);
                             }
-                            else {
-                                done({error: "User does not exist"})
+                        else {
+                                done(new Error("User does not exist"))
                                 console.log("failed one")
                             }
                         }
