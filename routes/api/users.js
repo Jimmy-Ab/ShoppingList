@@ -29,9 +29,9 @@ module.exports = function(app){
 
     app.post('/login',
         passport.authenticate(
-            'local',
+            'jimmy',
             {successRedirect: '/',
-            failureRedirect: '/login'}))
+            failureRedirect: '/login?failed=true'}))
 
     app.get('/api/profile', (req, res) => {
         var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)

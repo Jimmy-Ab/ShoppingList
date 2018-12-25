@@ -6,8 +6,20 @@ const passport = require('passport'),
 
 process.env.SECRET_KEY  = 'secret';
 
-        passport.use(new LocalStrategy(
+passport.serializeUser(function(user, done) {
+    done(null, user._id);
+  });
+  
+  passport.deserializeUser(function(_id, done) {
+    User.findById(_id, function(err, user) {
+      done(err, user);
+    });
+  });
+
+
+        passport.use("jimmy", new LocalStrategy({usernameField: 'email'},
             function (email, password, done) {
+                console.log("sfsdkksjd");
                 User.findOne({
                     email: email
                 })
@@ -25,7 +37,8 @@ process.env.SECRET_KEY  = 'secret';
                                     expiresIn: 1440
                                 })
                                 console.log("bcrypt found match", token)
-                                done(null, token);
+                                user.token = token
+                                done(null, user);
                             }
                             else {
                                 done({error: "User does not exist"})

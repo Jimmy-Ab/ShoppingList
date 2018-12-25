@@ -7,6 +7,8 @@ const cors = require('cors');
 const items = require('./routes/api/items');
 const users = require('./routes/api/users');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const passport = require('passport');
 
 
 
@@ -14,14 +16,13 @@ const app = express();
 
 
 
-//bodyParser middleware
+
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.static('public'));
-app.use(express.cookieParser());
-app.use(express.bodyParser());
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(cookieParser());
+app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
